@@ -73,8 +73,8 @@ struct
     switch (longPressGesture.state) {
         case UIGestureRecognizerStateBegan:
         {
-            if (!self.editing) {
-                self.editing = YES;
+            if (!self.tk_editing) {
+                self.tk_editing = YES;
                 [self triggerLongPressAndBeginEditing];
             }
             state = YES;
@@ -245,38 +245,38 @@ struct
 
 - (void)builtDragDelegateInitialize
 {
-    TKCustomDragCollectionViewDelegateFlags.moveItemFromTo = _dragDelegate && [_dragDelegate respondsToSelector:@selector(dragCollectionView:moveItemAtIndexPath:toIndexPath:)];
-    TKCustomDragCollectionViewDelegateFlags.beginEditing = _dragDelegate && [_dragDelegate respondsToSelector:@selector(dragCollectionViewBeginEditing:)];
-    TKCustomDragCollectionViewDelegateFlags.shouldBeginWithIndexPath = _dragDelegate && [_dragDelegate respondsToSelector:@selector(dragCollectionView:shouldTriggerGestureWithIndex:)];
+    TKCustomDragCollectionViewDelegateFlags.moveItemFromTo = _tk_dragDelegate && [_tk_dragDelegate respondsToSelector:@selector(dragCollectionView:moveItemAtIndexPath:toIndexPath:)];
+    TKCustomDragCollectionViewDelegateFlags.beginEditing = _tk_dragDelegate && [_tk_dragDelegate respondsToSelector:@selector(dragCollectionViewBeginEditing:)];
+    TKCustomDragCollectionViewDelegateFlags.shouldBeginWithIndexPath = _tk_dragDelegate && [_tk_dragDelegate respondsToSelector:@selector(dragCollectionView:shouldTriggerGestureWithIndex:)];
 }
 
 - (void)triggerLongPressAndBeginEditing
 {
     if (TKCustomDragCollectionViewDelegateFlags.beginEditing) {
-        [self.dragDelegate dragCollectionViewBeginEditing:self];
+        [self.tk_dragDelegate dragCollectionViewBeginEditing:self];
     }
 }
 
 - (void)exchangeItemFromIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
     if (TKCustomDragCollectionViewDelegateFlags.moveItemFromTo) {
-        [self.dragDelegate dragCollectionView:self moveItemAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
+        [self.tk_dragDelegate dragCollectionView:self moveItemAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
     }
 }
 
 - (BOOL)shouldResponderWithIndexPath:(NSIndexPath *)indexPath
 {
     if (TKCustomDragCollectionViewDelegateFlags.shouldBeginWithIndexPath) {
-        return [self.dragDelegate dragCollectionView:self shouldTriggerGestureWithIndex:indexPath];
+        return [self.tk_dragDelegate dragCollectionView:self shouldTriggerGestureWithIndex:indexPath];
     }
     return YES;
 }
 
 #pragma mark - Setter and Getter
 
-- (void)setEditing:(BOOL)editing
+- (void)setTk_editing:(BOOL)tk_editing
 {
-    _editing = editing;
+    _tk_editing = tk_editing;
 }
 
 - (void)setLongPressGestureEnabled:(BOOL)longPressGestureEnabled
@@ -286,9 +286,8 @@ struct
     self.longPress.enabled = longPressGestureEnabled;
 }
 
-- (void)setDragDelegate:(id<TKCustomDragCollectionViewDragDelegate>)dragDelegate
-{
-    _dragDelegate = dragDelegate;
+- (void)setTk_dragDelegate:(id<TKCustomDragCollectionViewDragDelegate>)tk_dragDelegate {
+    _tk_dragDelegate = tk_dragDelegate;
     [self builtDragDelegateInitialize];
 }
 

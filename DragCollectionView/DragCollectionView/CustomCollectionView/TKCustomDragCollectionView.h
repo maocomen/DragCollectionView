@@ -32,11 +32,11 @@
  */
 @interface TKCustomDragCollectionView : UICollectionView
 
-@property (nonatomic , assign) BOOL editing;
+@property (nonatomic , assign) BOOL tk_editing;
 
 @property (nonatomic , assign) BOOL longPressGestureEnabled;
 
-@property (nonatomic , weak) id <TKCustomDragCollectionViewDragDelegate> dragDelegate;
+@property (nonatomic , weak) id <TKCustomDragCollectionViewDragDelegate> tk_dragDelegate;
 
 
 @end

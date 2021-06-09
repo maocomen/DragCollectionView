@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self builtDataSources];
-    self.collectionView.dragDelegate = self;
+    self.collectionView.tk_dragDelegate = self;
     [self.collectionView registerClass:[CustomCollectionHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head"];
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -41,13 +41,13 @@
     static BOOL editState = NO;
     editState = !editState;
     if (editState) {
-        self.collectionView.editing = YES;
+        self.collectionView.tk_editing = YES;
         sender.title = @"完成";
         [[NSNotificationCenter defaultCenter] postNotificationName:kCustomEnterEditingNotification object:nil];
     }
     else
     {
-        self.collectionView.editing = NO;
+        self.collectionView.tk_editing = NO;
         sender.title = @"编辑";
         [[NSNotificationCenter defaultCenter] postNotificationName:kCustomEndEditingNotification object:nil];
     }
@@ -70,7 +70,7 @@
 {
     CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     TKCustomDragCollectionView *dragCollectionView = (TKCustomDragCollectionView *)collectionView;
-    dragCollectionView.editing ? [cell setSelectState] : [cell setDefaultState];
+    dragCollectionView.tk_editing ? [cell setSelectState] : [cell setDefaultState];
     return cell;
 }
 
