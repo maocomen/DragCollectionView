@@ -32,6 +32,7 @@
  */
 @interface TKCustomDragCollectionView : UICollectionView
 
+//用自定义的属性名防止与系统的冲突
 @property (nonatomic , assign) BOOL tk_editing;
 
 @property (nonatomic , assign) BOOL longPressGestureEnabled;
